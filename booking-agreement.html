@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="The Kept Aisle booking and deposit agreement - choose your package, agree to the deposit terms and pay your deposit by PayID.">
+<style>html{color-scheme:light}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>The Kept Aisle | Booking &amp; Deposit Agreement</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=Karla:ital,wght@0,400;0,600;0,700;1,400&display=swap">
+<style>
+  /* Layout: single column, step-by-step. Steps reveal as choices are made; payment only after agreeing. */
+  :root{
+    --bg:#faf6f1; --surface:#ffffff; --surface-2:#f3efe7;
+    --fg:#2b2e27; --muted:#6c7064; --line:#e0d9cd;
+    --olive:#4d5b44; --olive-soft:#eceee7; --gold:#b99a65; --gold-soft:#f7f0e4;
+    --display:"Marcellus",Georgia,"Times New Roman",serif;
+    --body:"Karla",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#191a16; --surface:#21231d; --surface-2:#2a2c25;
+      --fg:#efeae1; --muted:#a3a699; --line:#383b31;
+      --olive:#9bb08c; --olive-soft:#262a21; --gold:#d3b681; --gold-soft:#2e2819;
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#191a16; --surface:#21231d; --surface-2:#2a2c25;
+    --fg:#efeae1; --muted:#a3a699; --line:#383b31;
+    --olive:#9bb08c; --olive-soft:#262a21; --gold:#d3b681; --gold-soft:#2e2819;
+    color-scheme:dark;
+  }
+  *{box-sizing:border-box}
+  body{background:var(--bg); color:var(--fg); font-family:var(--body); font-size:16px; line-height:1.55; -webkit-text-size-adjust:100%}
+  .wrap{max-width:46rem; margin:0 auto; padding-left:max(16px,env(safe-area-inset-left,0px)); padding-right:max(16px,env(safe-area-inset-right,0px)); padding-block:1.75rem 3rem}
+  h1,h2,h3{font-family:var(--display); font-weight:400; text-wrap:balance; margin:0}
+  h1{font-size:clamp(1.6rem,5vw,2.1rem); line-height:1.15}
+  h2{font-size:1.15rem}
+  p{margin:0}
+  a{color:var(--olive)}
+  .eyebrow{font-size:.72rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-weight:600}
+  header.top{display:flex; flex-direction:column; gap:.4rem; padding-bottom:1.25rem; border-bottom:1px solid var(--line)}
+  .mono-logo{font-family:var(--display); letter-spacing:.3em; font-size:.8rem; color:var(--gold)}
+  .lede{color:var(--muted); font-size:.95rem; max-width:34rem}
+
+  .band{margin-top:1.25rem; display:flex; flex-wrap:wrap; gap:.5rem .9rem; align-items:baseline;
+    background:var(--gold-soft); border:1px solid var(--line); border-left:3px solid var(--gold); border-radius:4px; padding:.7rem .85rem}
+  .band strong{font-weight:700}
+  .band .count{font-variant-numeric:tabular-nums; color:var(--muted); font-size:.88rem}
+
+  section{margin-top:2rem}
+  .step-head{display:flex; align-items:baseline; gap:.6rem; margin-bottom:.75rem}
+  .num{font-family:var(--display); font-size:.78rem; color:var(--gold); border:1px solid var(--gold); border-radius:50%; width:1.6rem; height:1.6rem; display:grid; place-items:center; flex:none}
+  .hint{font-size:.85rem; color:var(--muted); margin-top:-.25rem; margin-bottom:.75rem}
+
+  .cards{display:grid; gap:.6rem}
+  label.card{display:grid; grid-template-columns:auto 1fr auto; gap:.2rem .75rem; align-items:start;
+    background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:.85rem .95rem; cursor:pointer}
+  label.card:focus-within{outline:2px solid var(--olive); outline-offset:2px}
+  label.card input{margin:.35rem 0 0; accent-color:var(--olive)}
+  label.card .name{font-family:var(--display); font-size:1.05rem}
+  label.card .note{grid-column:2; font-size:.85rem; color:var(--muted)}
+  label.card .price{grid-row:1 / span 2; text-align:right; font-variant-numeric:tabular-nums; min-width:0}
+  label.card .was{display:block; font-size:.8rem; color:var(--muted); text-decoration:line-through}
+  label.card .now{display:block; font-weight:700}
+  input:checked + .name{color:var(--olive)}
+  label.card:has(input:checked){border-color:var(--olive); background:var(--olive-soft); box-shadow:inset 0 0 0 1px var(--olive)}
+  .addons{display:grid; gap:.4rem}
+  label.addon{display:flex; gap:.6rem; align-items:flex-start; background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:.6rem .8rem; font-size:.93rem; cursor:pointer}
+  label.addon:has(input:checked){border-color:var(--olive); background:var(--olive-soft)}
+  label.addon input{margin:.3rem 0 0; accent-color:var(--olive)}
+  label.addon.disabled{opacity:.5}
+
+  .summary{background:var(--surface); border:1px solid var(--line); border-radius:6px; padding:1rem}
+  .row{display:flex; justify-content:space-between; gap:1rem; padding:.4rem 0; border-bottom:1px dashed var(--line); font-size:.95rem}
+  .row:last-of-type{border-bottom:0}
+  .row span:last-child{font-variant-numeric:tabular-nums; text-align:right}
+  .row.total{border-top:1px solid var(--line); border-bottom:0; margin-top:.4rem; padding-top:.7rem; font-size:1.05rem; font-weight:700}
+  .row.total .big{font-family:var(--display); font-size:1.5rem; font-weight:400; color:var(--olive)}
+  .row.sub span{color:var(--muted); font-size:.88rem}
+
+  .fields{display:grid; gap:.85rem}
+  .two{display:grid; grid-template-columns:1fr 1fr; gap:.85rem}
+  @media (max-width:520px){ .two{grid-template-columns:1fr} }
+  .field{display:grid; gap:.3rem; min-width:0}
+  .field label{font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); font-weight:600}
+  .field input{font:inherit; font-size:1rem; color:var(--fg); background:var(--surface); border:1px solid var(--line); border-radius:5px; padding:.6rem .7rem; width:100%}
+  .field input:focus{outline:2px solid var(--olive); outline-offset:1px; border-color:var(--olive)}
+  .field input:invalid:not(:placeholder-shown){border-color:#b4553f}
+
+  .terms{background:var(--surface-2); border:1px solid var(--line); border-radius:6px; padding:1rem}
+  .terms ul{margin:.3rem 0 0; padding-left:1.1rem; display:grid; gap:.5rem; font-size:.93rem}
+  .agree{display:flex; gap:.7rem; align-items:flex-start; margin-top:1rem; padding-top:.9rem; border-top:1px solid var(--line); font-weight:600; cursor:pointer}
+  .agree input{margin:.25rem 0 0; width:1.15rem; height:1.15rem; accent-color:var(--olive); flex:none}
+
+  button.primary{font:inherit; font-weight:700; background:var(--olive); color:#faf6f1; border:0; border-radius:5px; padding:.8rem 1.2rem; cursor:pointer; width:100%; margin-top:1rem}
+  button.primary:disabled{background:var(--surface-2); color:var(--muted); cursor:not-allowed}
+  button.primary:focus-visible{outline:2px solid var(--gold); outline-offset:2px}
+  .err{color:#b4553f; font-size:.88rem; margin-top:.5rem}
+
+  .pay{background:var(--olive-soft); border:1px solid var(--olive); border-radius:6px; padding:1rem}
+  .payrow{display:flex; justify-content:space-between; align-items:center; gap:.75rem; padding:.6rem 0; border-bottom:1px dashed var(--line); flex-wrap:wrap}
+  .payrow:last-child{border-bottom:0}
+  .payrow .k{font-size:.78rem; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:600}
+  .payrow .v{font-size:1.05rem; font-weight:700; font-variant-numeric:tabular-nums; word-break:break-word; min-width:0}
+  .payrow .v.big{font-family:var(--display); font-size:1.6rem; font-weight:400}
+  button.copy{font:inherit; font-size:.8rem; background:transparent; color:var(--olive); border:1px solid var(--olive); border-radius:4px; padding:.25rem .6rem; cursor:pointer}
+  .done{margin-top:1rem; font-size:.9rem; color:var(--muted)}
+  footer{margin-top:2.5rem; padding-top:1rem; border-top:1px solid var(--line); font-size:.82rem; color:var(--muted); display:grid; gap:.35rem}
+  .tiny{font-size:.78rem; color:var(--muted)}
+  table.log{width:100%; border-collapse:collapse; font-size:.8rem}
+  table.log th,table.log td{border:1px solid var(--line); padding:.3rem .4rem; text-align:left}
+  .scroll{overflow-x:auto}
+  @media (prefers-reduced-motion:no-preference){ section[data-reveal]{animation:fade .25s ease-out} @keyframes fade{from{opacity:.4}to{opacity:1}} }
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+  <header class="top">
+    <div class="mono-logo">THE KEPT AISLE</div>
+    <h1>Booking &amp; Deposit Agreement</h1>
+    <p class="lede">Choose your package, check the figures, and agree to the deposit terms. Payment details appear once you've agreed.</p>
+  </header>
+
+  <div class="band" id="band"></div>
+
+  <section id="s1">
+    <div class="step-head"><span class="num">1</span><h2>Your package</h2></div>
+    <div class="cards" id="packages"></div>
+    <div id="addonBlock" hidden>
+      <div class="step-head" style="margin-top:1.5rem"><span class="num">+</span><h2>Your included add-ons</h2></div>
+      <p class="hint" id="addonHint"></p>
+      <div class="addons" id="addons"></div>
+    </div>
+  </section>
+
+  <section id="s2" hidden data-reveal>
+    <div class="step-head"><span class="num">2</span><h2>Summary</h2></div>
+    <div class="summary" id="summary"></div>
+  </section>
+
+  <section id="s3" hidden data-reveal>
+    <div class="step-head"><span class="num">3</span><h2>Your details</h2></div>
+    <form class="fields" id="form" novalidate>
+      <div class="two">
+        <div class="field"><label for="p1">Your name</label><input id="p1" name="p1" autocomplete="name" placeholder="First and last name" required></div>
+        <div class="field"><label for="p2">Partner's name</label><input id="p2" name="p2" placeholder="First and last name" required></div>
+      </div>
+      <div class="two">
+        <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" inputmode="email" autocomplete="email" placeholder="you@email.com" required></div>
+        <div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="04…" required></div>
+      </div>
+      <div class="two">
+        <div class="field"><label for="date">Wedding date</label><input id="date" name="date" type="date" required></div>
+        <div class="field"><label for="venue">Venue or town</label><input id="venue" name="venue" placeholder="Venue name, or town if undecided" required></div>
+      </div>
+    </form>
+  </section>
+
+  <section id="s4" hidden data-reveal>
+    <div class="step-head"><span class="num">4</span><h2>Deposit terms</h2></div>
+    <div class="terms">
+      <ul id="termsList"></ul>
+      <label class="agree"><input type="checkbox" id="agree"> I have read and agree to these deposit terms.</label>
+      <button class="primary" id="go" disabled>Agree and show payment details</button>
+      <p class="err" id="err" hidden></p>
+    </div>
+  </section>
+
+  <section id="s5" hidden data-reveal>
+    <div class="step-head"><span class="num">5</span><h2>Pay your deposit</h2></div>
+    <div class="pay">
+      <div class="payrow"><div><div class="k">Amount</div><div class="v big" id="payAmount"></div></div></div>
+      <div class="payrow"><div><div class="k">PayID</div><div class="v" id="payId">0479123607</div></div><button class="copy" data-copy="payId">Copy</button></div>
+      <div class="payrow"><div><div class="k">Account name</div><div class="v">K&amp;BD Pty Ltd</div></div></div>
+      <div class="payrow"><div><div class="k">Payment reference — please use exactly</div><div class="v" id="payRef"></div></div><button class="copy" data-copy="payRef">Copy</button></div>
+    </div>
+    <p class="done" id="doneNote"></p>
+  </section>
+
+  <section id="logView" hidden>
+    <div class="step-head"><span class="num">i</span><h2>Agreements saved on this device</h2></div>
+    <p class="hint">Only the agreements completed in this browser. Not a substitute for the lead log.</p>
+    <div class="scroll"><table class="log" id="logTable"></table></div>
+    <button class="primary" id="copyCsv">Copy as CSV</button>
+  </section>
+
+  <footer>
+    <div>The Kept Aisle · Wedding planning and coordination, NSW · <a href="mailto:admin@thekeptaisle.com.au">admin@thekeptaisle.com.au</a></div>
+    <div class="tiny">Prices are GST-free. The Kept Aisle is not registered for GST. Prize draw terms: <a href="https://book.thekeptaisle.com.au/terms" target="_blank" rel="noopener">book.thekeptaisle.com.au/terms</a></div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var DEADLINE = new Date("2026-11-02T23:59:59+11:00");
+  var TERMS_URL = "https://book.thekeptaisle.com.au/terms";
+
+  var PACKAGES = {
+    month:   {name:"Month-of Coordination", std:1500, fair:1250, dep:100, addons:0, note:"Planning handover and coordination from four weeks out, plus the wedding day."},
+    partial: {name:"Partial Planning",      std:3500, fair:3250, dep:150, addons:1, note:"Planning support from booking, with vendor and design guidance, plus the day."},
+    full:    {name:"Full Planning",         std:6500, fair:6250, dep:150, addons:2, note:"End to end planning, design and coordination from booking to the day."}
+  };
+  var ADDONS = {
+    partial:[["wet","Wet weather plan",150],["photo","Family photo list & wrangling",150],["bpt","Bridal party timeline",150],["mc","MC & speech briefing",150]],
+    full:[["wet","Wet weather plan",150],["photo","Family photo list & wrangling",150],["mc","MC & speech briefing",150],["kids","Kids' corner setup",150],["transport","Guest transport coordination",150],["morning","Pre-wedding morning coordination (1 hour, getting-ready location)",125]]
+  };
+  var SOURCES = {ipad:"iPad", table:"Table QR", takehome:"Takehome", other:"Other"};
+
+  // Source: ?source=ipad on Kara's own domains, or #ipad on a shared link.
+  var qs = new URLSearchParams(location.search);
+  var hash = (location.hash || "").replace(/^#/,"").toLowerCase();
+  var srcKey = (qs.get("source") || hash || "other").toLowerCase();
+  if(srcKey === "standard" || srcKey === "fair" || srcKey === "log") srcKey = "other";
+  var SOURCE = SOURCES[srcKey] || "Other";
+
+  // Pricing mode: automatic by date. ?mode=standard / ?mode=fair (or #standard/#fair) for previewing only.
+  var modeOverride = (qs.get("mode") || hash || "").toLowerCase();
+  function fairOpen(){
+    if(modeOverride === "standard") return false;
+    if(modeOverride === "fair") return true;
+    return new Date() <= DEADLINE;
+  }
+  var FAIR = fairOpen();
+
+  var state = {pkg:null, addons:[]};
+  var $ = function(id){ return document.getElementById(id); };
+  var money = function(n){ return "$" + n.toLocaleString("en-AU"); };
+
+  function depositFor(key){
+    var p = PACKAGES[key];
+    return FAIR ? p.dep : Math.round(p.std * 0.15);
+  }
+  function priceFor(key){
+    var p = PACKAGES[key];
+    return FAIR ? p.fair : p.std;
+  }
+
+  /* ---- top band ---- */
+  function renderBand(){
+    var b = $("band");
+    if(!FAIR){
+      b.innerHTML = '<div><strong>Standard pricing.</strong> The fair rate closed at 11:59pm Monday 2 November 2026. Deposit is 15% of your package.</div>';
+      return;
+    }
+    var ms = DEADLINE - new Date();
+    var d = Math.floor(ms/86400000), h = Math.floor(ms/3600000)%24, m = Math.floor(ms/60000)%60;
+    b.innerHTML = '<div><strong>Fair rate — closes 11:59pm Monday 2 November 2026.</strong> Reduced deposit, included add-ons and automatic prize draw entry.</div>' +
+      '<div class="count">' + (ms>0 ? (d+"d "+h+"h "+m+"m left") : "Closing now") + '</div>';
+  }
+
+  /* ---- step 1 ---- */
+  function renderPackages(){
+    var html = "";
+    Object.keys(PACKAGES).forEach(function(key){
+      var p = PACKAGES[key];
+      var priceHtml = FAIR
+        ? '<span class="was">' + money(p.std) + '</span><span class="now">' + money(p.fair) + '</span>'
+        : '<span class="now">' + money(p.std) + '</span>';
+      var extra = (FAIR && p.addons) ? " Includes " + p.addons + " add-on" + (p.addons>1?"s":"") + " of your choice." : "";
+      html += '<label class="card"><input type="radio" name="pkg" value="' + key + '">' +
+        '<span class="name">' + p.name + '</span>' +
+        '<span class="price">' + priceHtml + '</span>' +
+        '<span class="note">' + p.note + extra + '</span></label>';
+    });
+    $("packages").innerHTML = html;
+    Array.prototype.forEach.call(document.querySelectorAll('input[name="pkg"]'), function(el){
+      el.addEventListener("change", function(){
+        state.pkg = el.value; state.addons = [];
+        renderAddons(); renderSummary(); renderTerms();
+        $("s2").hidden = false; $("s3").hidden = false; $("s4").hidden = false;
+        $("s5").hidden = true; $("agree").checked = false; checkReady();
+      });
+    });
+  }
+
+  function renderAddons(){
+    var block = $("addonBlock"), list = ADDONS[state.pkg], p = PACKAGES[state.pkg];
+    if(!FAIR || !list || !p.addons){ block.hidden = true; $("addons").innerHTML = ""; return; }
+    block.hidden = false;
+    $("addonHint").textContent = "Pick " + p.addons + " — included free with your fair-rate booking.";
+    $("addons").innerHTML = list.map(function(a){
+      return '<label class="addon"><input type="checkbox" value="' + a[0] + '" data-label="' + a[1] + '"><span>' + a[1] + ' <span class="tiny">(' + money(a[2]) + ' value)</span></span></label>';
+    }).join("");
+    Array.prototype.forEach.call($("addons").querySelectorAll("input"), function(el){
+      el.addEventListener("change", function(){
+        var picked = Array.prototype.filter.call($("addons").querySelectorAll("input"), function(i){ return i.checked; });
+        if(picked.length > p.addons){ el.checked = false; return; }
+        state.addons = picked.map(function(i){ return i.getAttribute("data-label"); });
+        lockAddons(picked.length >= p.addons);
+        renderSummary(); checkReady();
+      });
+    });
+  }
+  function lockAddons(full){
+    Array.prototype.forEach.call($("addons").querySelectorAll("label.addon"), function(l){
+      var box = l.querySelector("input");
+      var off = full && !box.checked;
+      box.disabled = off; l.classList.toggle("disabled", off);
+    });
+  }
+
+  /* ---- step 2 ---- */
+  function renderSummary(){
+    var p = PACKAGES[state.pkg]; if(!p) return;
+    var h = "";
+    h += '<div class="row"><span>' + p.name + '</span><span>' + money(priceFor(state.pkg)) + '</span></div>';
+    if(FAIR){
+      h += '<div class="row sub"><span>Standard price ' + money(p.std) + ' — fair rate saves you</span><span>' + money(p.std - p.fair) + '</span></div>';
+    }
+    if(p.addons && FAIR){
+      h += state.addons.length
+        ? state.addons.map(function(a){ return '<div class="row"><span>' + a + '</span><span>Included</span></div>'; }).join("")
+        : '<div class="row sub"><span>Add-ons</span><span>Pick ' + p.addons + ' above</span></div>';
+    }
+    h += '<div class="row sub"><span>' + (FAIR ? "Prize draw entry (up to $650)" : "Prize draw closed") + '</span><span>' + (FAIR ? "Included" : "—") + '</span></div>';
+    h += '<div class="row total"><span>Deposit due today' + (FAIR ? "" : " (15%)") + '</span><span class="big">' + money(depositFor(state.pkg)) + '</span></div>';
+    h += '<div class="row sub"><span>Balance after deposit</span><span>' + money(priceFor(state.pkg) - depositFor(state.pkg)) + '</span></div>';
+    $("summary").innerHTML = h;
+  }
+
+  /* ---- step 4 ---- */
+  function renderTerms(){
+    var items = [
+      "Your deposit is non-refundable and secures your wedding date with The Kept Aisle.",
+      "The deposit comes off your package total — the balance shown in your summary is what's left to pay.",
+      FAIR
+        ? "Your fair rate and included add-ons are locked in for bookings made by 11:59pm Monday 2 November 2026."
+        : "Standard pricing applies, and the deposit is 15% of your package total.",
+      "Your full contract will follow by email, along with the next-step forms.",
+      'Prize draw terms and conditions: <a href="' + TERMS_URL + '" target="_blank" rel="noopener">book.thekeptaisle.com.au/terms</a>'
+    ];
+    $("termsList").innerHTML = items.map(function(i){ return "<li>" + i + "</li>"; }).join("");
+  }
+
+  function surnames(){
+    function last(v){ var parts = (v||"").trim().split(/\s+/); return parts.length>1 ? parts[parts.length-1] : (parts[0]||""); }
+    var a = last($("p1").value), b = last($("p2").value);
+    var ref = [a,b].filter(Boolean).join("-").toUpperCase().replace(/[^A-Z-]/g,"");
+    return ref || "BOOKING";
+  }
+
+  function formComplete(){
+    var ids = ["p1","p2","email","phone","date","venue"];
+    for(var i=0;i<ids.length;i++){ if(!$(ids[i]).value.trim()) return false; }
+    if(!/.+@.+\..+/.test($("email").value.trim())) return false;
+    var p = PACKAGES[state.pkg];
+    if(FAIR && p && p.addons && state.addons.length !== p.addons) return false;
+    return true;
+  }
+  function checkReady(){
+    $("go").disabled = !($("agree").checked && state.pkg);
+  }
+
+  function reveal(){
+    if(!formComplete()){
+      var e = $("err");
+      var p = PACKAGES[state.pkg];
+      e.textContent = (FAIR && p && p.addons && state.addons.length !== p.addons)
+        ? "Pick " + p.addons + " add-on" + (p.addons>1?"s":"") + " in step 1 first."
+        : "Fill in every field in step 3 — we need all of it for your contract.";
+      e.hidden = false;
+      $("s3").scrollIntoView({behavior:"smooth", block:"center"});
+      return;
+    }
+    $("err").hidden = true;
+    var ref = surnames();
+    $("payAmount").textContent = money(depositFor(state.pkg));
+    $("payRef").textContent = ref;
+    $("doneNote").innerHTML = "Once your deposit lands, Kara will confirm by email and send your contract and next-step forms. If anything above looks wrong, grab Kara at the stall or reply to the confirmation email.";
+    $("s5").hidden = false;
+    save(ref);
+    $("s5").scrollIntoView({behavior:"smooth", block:"start"});
+  }
+
+  /* ---- device record ---- */
+  var KEY = "tka-agreements-v1";
+  function readLog(){ try{ return JSON.parse(localStorage.getItem(KEY) || "[]"); }catch(e){ return []; } }
+  function save(ref){
+    var rec = {
+      ts: new Date().toISOString(),
+      p1: $("p1").value.trim(), p2: $("p2").value.trim(),
+      email: $("email").value.trim(), phone: $("phone").value.trim(),
+      date: $("date").value, venue: $("venue").value.trim(),
+      pkg: PACKAGES[state.pkg].name, addons: state.addons.join(" + "),
+      deposit: depositFor(state.pkg), ref: ref,
+      agreed: "Yes", rate: FAIR ? "Fair rate" : "Standard", source: SOURCE
+    };
+    try{ var all = readLog(); all.push(rec); localStorage.setItem(KEY, JSON.stringify(all)); }catch(e){}
+  }
+
+  var COLS = [["ts","Time"],["p1","Partner 1"],["p2","Partner 2"],["email","Email"],["phone","Phone"],["date","Wedding date"],["venue","Venue"],["pkg","Package"],["addons","Add-ons"],["deposit","Deposit"],["ref","Reference"],["agreed","Agreed"],["rate","Rate"],["source","Source"]];
+  function renderLog(){
+    var rows = readLog();
+    $("logView").hidden = false;
+    $("logTable").innerHTML = "<tr>" + COLS.map(function(c){ return "<th>" + c[1] + "</th>"; }).join("") + "</tr>" +
+      (rows.length ? rows.map(function(r){
+        return "<tr>" + COLS.map(function(c){ var v = r[c[0]]; return "<td>" + String(v === undefined ? "" : v).replace(/[<&]/g, function(m){ return m === "<" ? "&lt;" : "&amp;"; }) + "</td>"; }).join("") + "</tr>";
+      }).join("") : '<tr><td colspan="' + COLS.length + '">Nothing saved in this browser yet.</td></tr>');
+    $("copyCsv").addEventListener("click", function(){
+      var csv = [COLS.map(function(c){ return c[1]; }).join(",")].concat(readLog().map(function(r){
+        return COLS.map(function(c){ return '"' + String(r[c[0]] === undefined ? "" : r[c[0]]).replace(/"/g,'""') + '"'; }).join(",");
+      })).join("\n");
+      copy(csv, $("copyCsv"), "Copy as CSV");
+    });
+  }
+
+  function copy(text, btn, reset){
+    var label = reset || "Copy";
+    try{
+      navigator.clipboard.writeText(text).then(function(){
+        btn.textContent = "Copied"; setTimeout(function(){ btn.textContent = label; }, 1600);
+      }, function(){ fallback(); });
+    }catch(e){ fallback(); }
+    function fallback(){
+      btn.textContent = "Select it";
+      var t = document.createElement("textarea");
+      t.value = text; t.style.position="fixed"; t.style.opacity="0";
+      document.body.appendChild(t); t.select();
+      setTimeout(function(){ document.body.removeChild(t); btn.textContent = label; }, 2500);
+    }
+  }
+
+  /* ---- wire up ---- */
+  renderBand(); renderPackages(); setInterval(renderBand, 30000);
+  $("agree").addEventListener("change", checkReady);
+  $("go").addEventListener("click", reveal);
+  Array.prototype.forEach.call(document.querySelectorAll("button.copy"), function(b){
+    b.addEventListener("click", function(){ copy($(b.getAttribute("data-copy")).textContent, b); });
+  });
+  if((qs.get("view") || hash) === "log") renderLog();
+})();
+</script>
+
+</body>
+</html>
